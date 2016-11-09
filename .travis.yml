@@ -3,9 +3,7 @@ python:
   - "2.7"
 
 # Para instalar las dependencias
-install:
- -make install
+install: make install
 
 # Para ejecutar tests
-script: 
- -make test
+script: make test
