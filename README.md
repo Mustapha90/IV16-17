@@ -19,9 +19,9 @@ En principio se usarán las siguientes tecnologías/herramientas:
 * Bootstrap
 * HTML y CSS
 
-# 3- Integración continua
+## 3- Integración continua
 
-## Tests
+### Tests
 Los tests se han realizado usando la herramienta de tests que viene integrada en Django, importando el módulo TestCase.
 
 ```python
@@ -29,7 +29,7 @@ from django.test import TestCase
 from rango.models import Bares, Tapas
 from django.core.urlresolvers import reverse
 
-# Create your tests here.
+### Create your tests here.
 
 def add_bar(name, views, likes):
     b = Bares.objects.get_or_create(name=name)[0]
@@ -95,7 +95,7 @@ Para ejecutarlos:
 
 ``$ python manage.py test``
 
-## Herramientas de construcción
+### Herramientas de construcción
 Las herramientas de construccion que he creado son:
 
 ``populate_rango.py``: Un script que rellena la base de datos.
@@ -123,7 +123,7 @@ Un fichero que contiene las dependencias de la aplicación
 Django==1.7
 django-registration-redux==1.2
 ```
-## Travis
+### Travis
 
 Para la integracion continua he elegido Travis, ya que es el que ha recomiendado el profesor, además es muy popular y fácil de usar.
 
@@ -142,10 +142,10 @@ language: python
 python:
   - "2.7"
 
-# Para instalar las dependencias
+### Para instalar las dependencias
 install: make install
 
-# Para ejecutar tests
+### Para ejecutar tests
 script: make test
 ```
 **Paso 3**
