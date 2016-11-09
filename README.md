@@ -1,5 +1,7 @@
 # Proyecto-IV. Guía de tapas
 
+https://travis-ci.org/Mustapha90/IV16-17.svg?branch=master
+
 Este proyecto consiste en crear la infraestructura para el alojamiento, funcionamiento y despliegue de una aplicación web. Será el proyecto que se va a desarrollar en la asignatura DAI, curso 2016/17.
 
 ## Descripción
