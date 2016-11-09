@@ -151,16 +151,16 @@ python:
 
 # instalar las dependencias
 install: 
- make install
+ - make install
 
 # crear la base de datos
 before_script: 
- make createdb
- make populate
+ - make createdb
+ - make populate
 
 # ejecutar tests
 script: 
- make test
+ - make test
 ```
 **Paso 3**
 
