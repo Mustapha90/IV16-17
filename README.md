@@ -102,17 +102,24 @@ Las herramientas de construccion que he creado son:
 
 **Makefile**
 
-Un fichero makefile que permite instalar las dependencias, lanzar tests, ejecutar el script que rellena la base de datos, y lanzar la aplicación
+Un fichero makefile con el siguiente contenido:
 
 ```makefile
+# instalar las dependencias
 install:
 	pip install -r requirements.txt
+# lanzar tests
 test:
 	python manage.py test
+#rellenar la base de datos
 populate:
 	python populate_rango.py
+# Lanzar la aplicación 
 execute:
 	python manage.py runserver
+#Crear la base de datos (sqlite3)
+createdb:
+	python manage.py migrate --noinput
 ```
 
 **requirements.txt**
@@ -142,11 +149,18 @@ language: python
 python:
   - "2.7"
 
-### Para instalar las dependencias
-install: make install
+# instalar las dependencias
+install: 
+ make install
 
-### Para ejecutar tests
-script: make test
+# crear la base de datos
+before_script: 
+ make createdb
+ make populate
+
+# ejecutar tests
+script: 
+ make test
 ```
 **Paso 3**
 

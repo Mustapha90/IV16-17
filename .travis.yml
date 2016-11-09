@@ -2,8 +2,15 @@ language: python
 python:
   - "2.7"
 
-# Para instalar las dependencias
-install: make install
+# instalar las dependencias
+install: 
+ make install
 
-# Para ejecutar tests
-script: make test
+# crear la base de datos
+before_script: 
+ make createdb
+ make populate
+
+# ejecutar tests
+script: 
+ make test
