@@ -2,10 +2,10 @@ language: python
 python:
   - "2.7"
 
-# command to install dependencies
+# Para instalar las dependencias
 install: 
 	make install
 
-# command to run tests
+# Para ejecutar tests
 script: 
 	make test
