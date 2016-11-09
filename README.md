@@ -19,6 +19,144 @@ En principio se usarán las siguientes tecnologías/herramientas:
 * Bootstrap
 * HTML y CSS
 
+# 3- Integración continua
+
+## Tests
+Los tests se han realizado usando la herramienta de tests que viene integrada en Django, importando el módulo TestCase.
+
+```python
+from django.test import TestCase
+from rango.models import Bares, Tapas
+from django.core.urlresolvers import reverse
+
+# Create your tests here.
+
+def add_bar(name, views, likes):
+    b = Bares.objects.get_or_create(name=name)[0]
+    b.views = views
+    b.likes = likes
+    b.save()
+    return b
+
+
+class TestsBares(TestCase):
+    def test_Visitas(self):
+        """
+                Asegurar que el numero de visitas es siempre positivo
+        """
+        bar = Bares(name='test',views=-1, likes=0)
+        bar.save()
+        self.assertEqual((bar.views >= 0), True)
+
+    def test_slug(self):
+        """
+                Comprobar la creacion de un campo slug
+        """
+
+        bar = Bares(name='bar de pepe',views=0, likes=0)
+        bar.save()
+        self.assertEqual(bar.slug, 'bar-de-pepe')
+
+class TestViews(TestCase):
+
+    def test_views_sin_bares(self):
+        """
+        Si no hay categorias, mostrar mensaje
+        """
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No hay categorias.")
+        self.assertQuerysetEqual(response.context['categories'], [])
+     
+    def test_view_con_bares(self):
+        """
+            Comprobr que los bares se muestran correctamente
+        """
+        add_bar('test',1,1)
+        add_bar('temp',1,1)
+        add_bar('tmp',1,1)
+        add_bar('tmp test temp',1,1)
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "tmp test temp")
+        num_cats =len(response.context['categories'])
+        self.assertEqual(num_cats , 4)
+
+class TestTapas(TestCase):
+	def test_crear_tapa(self):
+		b = Bares(name='test',views=-0, likes=0)
+		b.save()
+		t = Tapas(title="tapa", likes=10, category=b)
+		t.save()
+		self.assertEqual(t.title,"tapa")
+```
+
+Para ejecutarlos:
+
+``$ python manage.py test``
+
+## Herramientas de construcción
+Las herramientas de construccion que he creado son:
+
+``populate_rango.py``: Un script que rellena la base de datos.
+
+**Makefile**
+
+Un fichero makefile que permite instalar las dependencias, lanzar tests, ejecutar el script que rellena la base de datos, y lanzar la aplicación
+
+```makefile
+install:
+	pip install -r requirements.txt
+test:
+	python manage.py test
+populate:
+	python populate_rango.py
+execute:
+	python manage.py runserver
+```
+
+**requirements.txt**
+
+Un fichero que contiene las dependencias de la aplicación
+
+```
+Django==1.7
+django-registration-redux==1.2
+```
+## Travis
+
+Para la integracion continua he elegido Travis, ya que es el que ha recomiendado el profesor, además es muy popular y fácil de usar.
+
+Para añadir la integración continua a nuestro repositorio seguimos los siguientes pasos:
+
+**Paso 1**
+
+En nuestra cuenta de Travis, activamos la integración continua para nuestro repositorio.
+
+**Paso 2**
+
+Creamos el fichero ``.travis.yml`` con el siguiente contenido:
+
+```yml
+language: python
+python:
+  - "2.7"
+
+# Para instalar las dependencias
+install: make install
+
+# Para ejecutar tests
+script: make test
+```
+**Paso 3**
+
+Añadimos el fichero ``.travis.yml`` a nuestro repositorio y hacemos un push a la rama master
+
+**Paso 4**
+
+Ahora nos vamos a nuestra cuenta de Travis, para ver el resultado de la integración.
+
+
 ## Infrastructura:
 
 En principio, el despliege de la aplicación se realizará en Azure, probablemente usando heroku como PaaS, se añadirán más detalles en los siguientes hitos.
