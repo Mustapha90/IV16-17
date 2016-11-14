@@ -21,7 +21,6 @@ class Bares(models.Model):
 class Tapas(models.Model):
     category = models.ForeignKey(Bares)
     title = models.CharField(max_length=128)
-    url = models.URLField()
     likes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
