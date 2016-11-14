@@ -38,9 +38,8 @@ def populate():
         for p in Tapas.objects.filter(category=c):
             print "- {0} - {1}".format(str(c), str(p))
 
-def add_page(cat, title, url, views=0):
+def add_page(cat, title, views=0):
     p = Tapas.objects.get_or_create(category=cat, title=title)[0]
-    p.url=url
     p.views=views
     p.save()
     return p
