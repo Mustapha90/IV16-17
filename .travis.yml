@@ -2,6 +2,10 @@ language: python
 python:
   - "2.7"
 
+# Antes de instalar
+before_install:
+  - export DJANGO_SETTINGS_MODULE=tango_with_django_project.dev_settings
+
 # instalar las dependencias
 install: 
  - make install_dev
