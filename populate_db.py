@@ -8,43 +8,35 @@ from rango.models import Bares, Tapas
 
 
 def populate():
-    python_cat = add_cat('Python')
+    python_cat = add_cat('LOS DIAMANTES')
 
     add_page(cat=python_cat,
-        title="Official Python Tutorial",
-        url="http://docs.python.org/2/tutorial/")
+        title="Boquerones en vinagre"
 
     add_page(cat=python_cat,
-        title="How to Think like a Computer Scientist",
-        url="http://www.greenteapress.com/thinkpython/")
+        title="Empanada gallega"
 
     add_page(cat=python_cat,
-        title="Learn Python in 10 Minutes",
-        url="http://www.korokithakis.net/tutorials/python/")
+        title="Gazpacho andaluz"
 
-    django_cat = add_cat("Django")
-
-    add_page(cat=django_cat,
-        title="Official Django Tutorial",
-        url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
+    django_cat = add_cat("EL MINOTAURO")
 
     add_page(cat=django_cat,
-        title="Django Rocks",
-        url="http://www.djangorocks.com/")
+        title="Pimientos del piquillo"
 
     add_page(cat=django_cat,
-        title="How to Tango with Django",
-        url="http://www.tangowithdjango.com/")
+        title="Pulpo a la gallega"
 
-    frame_cat = add_cat("Other Frameworks")
+    add_page(cat=django_cat,
+        title="Gambas al ajillo"
+
+    frame_cat = add_cat("BABEL WORLD FUSIÓN")
 
     add_page(cat=frame_cat,
-        title="Bottle",
-        url="http://bottlepy.org/docs/dev/")
+        title="Calamares a la romana"
 
     add_page(cat=frame_cat,
-        title="Flask",
-        url="http://flask.pocoo.org")
+        title="Patatas bravas"
 
     # Print out what we have added to the user.
     for c in Bares.objects.all():
