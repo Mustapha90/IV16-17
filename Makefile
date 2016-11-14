@@ -1,18 +1,19 @@
 # instalar las dependencias
-install:
-	pip install -r requirements.txt
+install_dev:
+	pip install -r requirements/dev.txt
+
+#Crear la base de datos
+migrate:
+	python manage.py migrate --noinput
+
+#rellenar la base de datos
+populate:
+	python populate_db.py
+
 # lanzar tests
 test:
 	python manage.py test
-#rellenar la base de datos
-populate:
-	python populate_rango.py
+
 # Lanzar la aplicación 
-execute:
+run:
 	python manage.py runserver
-#Crear la base de datos (sqlite3)
-createdb:
-	python manage.py migrate --noinput
-
-
-
