@@ -4,11 +4,11 @@ python:
 
 # instalar las dependencias
 install: 
- - make install
+ - make install_dev
 
 # crear la base de datos
 before_script: 
- - make createdb
+ - make migrate
  - make populate
 
 # ejecutar tests
