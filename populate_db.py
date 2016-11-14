@@ -10,33 +10,25 @@ from rango.models import Bares, Tapas
 def populate():
     python_cat = add_cat('LOS DIAMANTES')
 
-    add_page(cat=python_cat,
-        title="Boquerones en vinagre"
+    add_page(cat=python_cat,title="Boquerones en vinagre")
 
-    add_page(cat=python_cat,
-        title="Empanada gallega"
+    add_page(cat=python_cat,title="Empanada gallega")
 
-    add_page(cat=python_cat,
-        title="Gazpacho andaluz"
+    add_page(cat=python_cat,title="Gazpacho andaluz")
 
     django_cat = add_cat("EL MINOTAURO")
 
-    add_page(cat=django_cat,
-        title="Pimientos del piquillo"
+    add_page(cat=django_cat,title="Pimientos del piquillo")
 
-    add_page(cat=django_cat,
-        title="Pulpo a la gallega"
+    add_page(cat=django_cat,title="Pulpo a la gallega")
 
-    add_page(cat=django_cat,
-        title="Gambas al ajillo"
+    add_page(cat=django_cat,title="Gambas al ajillo")
 
     frame_cat = add_cat("BABEL WORLD FUSIÓN")
 
-    add_page(cat=frame_cat,
-        title="Calamares a la romana"
+    add_page(cat=frame_cat,title="Calamares a la romana")
 
-    add_page(cat=frame_cat,
-        title="Patatas bravas"
+    add_page(cat=frame_cat,title="Patatas bravas")
 
     # Print out what we have added to the user.
     for c in Bares.objects.all():
