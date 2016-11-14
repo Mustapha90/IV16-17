@@ -13,7 +13,7 @@ from rango.models import Bares, Tapas
 def populate():
     python_cat = add_cat('LOS DIAMANTES')
 
-    add_page(cat=python_cat,title="Boquerones en vinagre")
+    add_page(cat=python_cat,title="Boquerones")
 
     add_page(cat=python_cat,title="Empanada gallega")
 
