@@ -12,3 +12,6 @@ DATABASES = {
         default=config('DATABASE_URL')
     )
 }
+
+ALLOWED_HOSTS = [".herokuapp.com"]
+
