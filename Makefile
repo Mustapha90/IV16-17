@@ -6,7 +6,7 @@ install_dev:
 migrate:
 	python manage.py makemigrations --noinput
 	python manage.py migrate --noinput
-
+    
 #rellenar la base de datos
 populate:
 	python populate_db.py
