@@ -29,7 +29,7 @@ def populate():
 
     frame_cat = add_cat("BABEL WORLD FUSIÓN")
 
-    add_page(cat=frame_cat,title="Calamares a la romana")
+    add_page(cat=frame_cat,title="Calamares fritos")
 
     add_page(cat=frame_cat,title="Patatas bravas")
 
