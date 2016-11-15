@@ -24,6 +24,6 @@ deploy:
 	heroku addons:create heroku-postgresql:hobby-dev
 	heroku config:set SECRET_KEY=`openssl rand -base64 32`
 	git push heroku master
-	python manage.py migrate --noinput
-	python populate_db.py
+	heroku python manage.py migrate --noinput
+	heroku python populate_db.py
 	heroku open
