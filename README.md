@@ -1,14 +1,23 @@
 # Proyecto-IV. Guía de tapas
 
 [![Build Status](https://travis-ci.org/Mustapha90/IV16-17.svg?branch=master)](https://travis-ci.org/Mustapha90/IV16-17)
+[![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat)](https://iv1617.herokuapp.com)
 
 Este proyecto consiste en crear la infraestructura para el alojamiento, funcionamiento y despliegue de una aplicación web. Será el proyecto que se va a desarrollar en la asignatura DAI, curso 2016/17.
 
-## Descripción
+##Índice
+
+1. [Descripción](#descripción)
+2. [Herramientas de dessarrollo](#Herramientas-de-dessarrollo)
+3. [Integración continua](#Integración-continua)
+4. [Despliegue en PaaS - Heroku](#Despliegue-en-PaaS---Heroku)
+
+
+##Descripción
 
 Aplicación web que permite a los usuarios encontrar bares a visitar, localizarlos y consultar las tapas que hay disponibles, también se permitirá a los usuarios votar sobre las tapas y bares, registrarse y probablemente hacer reservas.
 
-## Herramientas de dessarrollo:
+##Herramientas de dessarrollo
 En principio se usarán las siguientes tecnologías/herramientas:
 
 * Python.
@@ -19,9 +28,9 @@ En principio se usarán las siguientes tecnologías/herramientas:
 * Bootstrap
 * HTML y CSS
 
-## 3- Integración continua
+##Integración continua
 
-### Tests
+###Tests
 Los tests se han realizado usando la herramienta de tests que viene integrada en Django, importando el módulo TestCase.
 
 ```python
@@ -29,7 +38,7 @@ from django.test import TestCase
 from rango.models import Bares, Tapas
 from django.core.urlresolvers import reverse
 
-### Create your tests here.
+###Create your tests here.
 
 def add_bar(name, views, likes):
     b = Bares.objects.get_or_create(name=name)[0]
@@ -95,7 +104,7 @@ Para ejecutarlos:
 
 ``$ python manage.py test``
 
-### Herramientas de construcción
+###Herramientas de construcción
 Las herramientas de construccion que he creado son:
 
 ``populate_rango.py``: Un script que rellena la base de datos.
@@ -130,7 +139,7 @@ Un fichero que contiene las dependencias de la aplicación
 Django==1.7
 django-registration-redux==1.2
 ```
-### Travis
+###Travis
 
 Para la integracion continua he elegido Travis, ya que es el que ha recomiendado el profesor, además es muy popular y fácil de usar.
 
@@ -149,16 +158,16 @@ language: python
 python:
   - "2.7"
 
-# instalar las dependencias
+#instalar las dependencias
 install: 
  - make install
 
-# crear la base de datos
+#crear la base de datos
 before_script: 
  - make createdb
  - make populate
 
-# ejecutar tests
+#ejecutar tests
 script: 
  - make test
 ```
@@ -171,8 +180,275 @@ Añadimos el fichero ``.travis.yml`` a nuestro repositorio y hacemos un push a l
 Ahora nos vamos a nuestra cuenta de Travis, para ver el resultado de la integración.
 
 
-## Infrastructura:
+##Despliegue en PaaS - Heroku
 
-En principio, el despliege de la aplicación se realizará en Azure, probablemente usando heroku como PaaS, se añadirán más detalles en los siguientes hitos.
+Como PaaS se ha elegido Heroku porque es muy fácil de usar, tiene una documentación muy buena, ofrece hasta cinco aplicaciónes y además permite usar PostgreSQL, todo esto sin ningún coste!
 
+###Algunos problemas
+
+Antes estabamos trabajando en un entorno de desarrollo/pruebas ahora se añade otro entorno, que es el entorno de producción (Heroku), antes usabamos sqlite3, en Heroku no podemos usarla, tenemos que usar PostgreSQL, otro problema que surge es que la configuración de las variables de entorno va a ser distinta, por ejemplo en un entorno de desarrollo, necesitamos activar el modo depuración, mientras en un PaaS la opción de depuración debe estar desactivada.
+
+Además las dependencias son diferentes en los dos entornos, y no tiene sentido usar el mismo fichero ``requirements.txt`` en Travis y en Heroku, estaremos instalando librerías que no se van a usar, estos problemas se resolverán en las siguientes secciones.
+
+###Separación de los entornos
+
+Para resolver los problemas anteriores vamos a separar los entornos.
+
+####Separación de los archivos de configuración
+
+Crearemos diferentes ficheros de configuración para cada entorno:
+
+``common_settings.py`` Contentrá la configuración común a los dos entornos
+
+``dev_settings.py`` Contentrá la configuración específica al entorno de desarrollo/pruebas
+
+``settings.py`` Contentrá la configuración específica al entorno de producción
+
+Los dos ficheros de configuración de entornos "heredan" del fichero ``common_settings.py``
+
+Por defecto se trabajaŕa con la configuración de producción ya que más adelante vamos a configurar el despliegue automático con nuestro repositorio github.
+
+En el entorno de desarrollo trabajaremos con una base de datos ``sqlite3`` y tendremos el modo depuración activado
+
+Contenido del fichero dev_settings.py
+
+```python
+# -*- coding: utf-8 -*-
+
+from .common_settings import *
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'dz(#w(lfve24ck!!yrt3l7$jfdoj+fgf+ru@w)!^gn9aq$s+&y'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+
+Para trabajar con la configuración de desarrollo hacemos:
+
+``export DJANGO_SETTINGS_MODULE="tango_with_django_project.dev_settings"``
+
+También podemos añadir la linea anterior al final del fichero ``bin/activate`` del entorno virtualenv donde trabajamos para no tener que hacerlo cada vez que lanzamos el shell.
+
+####Separación de las dependencias de cada entorno
+
+Antes teníamos un fichero de depencencias ``requirements.txt``, este fichero lo vamos a dejar para Heroku, y crearemos otro fichero que contendrá las dependencias de desarrollo ``dev_requirements.txt``
+
+###Preparación de la app para el despliegue
+
+###Configuración del contenido estático
+
+Hay que añadir la configuración correcta para que nuestra aplicación podrá servir contenido estático en el Paas.
+
+Para lograrlo usaremos ``whitenoise``, editamos el fichero ``wsgi.py`` de nuestro proyecto
+
+```python
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tango_with_django_project.settings")
+
+from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
+
+application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
+```
+
+Añadimos la siguiente linea en el fichero de configuración ``common_settings.py``
+
+```python
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+```
+
+###Configuración de las variables de entorno
+
+Para configurar las variables de entorno en el PaaS usaremos los paquetes python-decouple y dj-database-url.
+
+Editamos el fichero de configuración de producción:
+
+```python
+# -*- coding: utf-8 -*-
+
+# Importar la configuracion comun
+from .common_settings import *
+
+from decouple import config
+import dj_database_url
+
+# Configuramos la variable de entorno secret_key en el Paas
+SECRET_KEY = config('SECRET_KEY')
+
+# Configuramos la variable de entorno de depuración
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Configuramos la variable de entorno DATABASE_URL que será configurada por Heroku al crear la base de datos Postgres
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
+
+#Permitir el acceso al host de heroku
+ALLOWED_HOSTS = [".herokuapp.com"]
+```
+
+###Ficheros de configuración del PaaS
+
+Para desplegar la aplicación necesitamos los siguientes ficheros de configuración:
+
+**``requirements.txt``**
+
+Contiene las dependencias necesarias para el despliegue en el PaaS
+
+```
+Django==1.7
+django-registration-redux==1.2
+whitenoise
+dj-database-url==0.3.0
+python-decouple==3
+dj-static==0.0.6
+gunicorn==19.6.0
+psycopg2==2.6.1
+```
+
+**``runtime.txt``**
+
+Contiene la versión de python necesaria para ejecutar la aplicación
+
+```
+python-2.7.12
+```
+
+**``Procfile``**
+
+Contiene la orden que se usará para ejecutar la aplicación
+
+```
+web: gunicorn tango_with_django_project.wsgi --log-file -
+```
+
+###Despliegue en Heroku
+
+Ya tenemos la configuración  necesaria para empezar el despliegue.
+
+Creamos la app en Heroku especificando la región y el nombre de la app
+
+``$ heroku apps:create --region eu appiv``
+
+Creamos la base de datos
+
+``$ heroku addons:create heroku-postgresql:hobby-dev``
+
+Creamos la variable de entonro SECRET_KEY en Heroku
+
+``$ heroku config:set SECRET_KEY=`openssl rand -base64 32` ``
+
+Iniciamos el despliegue de la aplicación
+
+``$ git push heroku master``
+
+Creamos las tablas de la base de datos
+
+``$ heroku run python manage.py migrate --noinput``
+
+Rellenamos la base de datos
+
+``$ heroku run python populate_db.py``
+
+Ya podemos ver el resultado del despliegue ingresando la url de nuestra aplicación en Heroku o ejecutando:
+
+``$ heroku open``
+
+La aplicación se encuentra desplegada en el siguiente enlace:
+
+[![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat)](https://iv1617.herokuapp.com)
+
+### Actualización de la configuración de Travis
+
+Actualizamos el fichero ``.travis.yml`` para que la integración continua funcione correctamente con los cambios que hemos hecho.
+
+```
+language: python
+python:
+  - "2.7"
+```
+# Antes de instalar, exportar la variable de entorno para trabajar con la configuración de desarrollo
+before_install:
+  - export DJANGO_SETTINGS_MODULE=tango_with_django_project.dev_settings
+
+# instalar las dependencias de desarrollo
+install: 
+ - make install_dev
+
+# crear la base de datos
+before_script: 
+ - make migrate
+ - make populate
+
+# ejecutar tests
+script: 
+ - make test
+```
+
+Actualizamos el Makefile:
+# instalar las dependencias de desarrollo/test
+install_dev:
+	pip install -r dev_requirements.txt
+
+#Crear la base de datos
+migrate:
+	python manage.py makemigrations --noinput
+	python manage.py migrate --noinput
+    
+#rellenar la base de datos
+populate:
+	python populate_db.py
+
+# lanzar tests
+test:
+	python manage.py test
+
+# Lanzar la aplicación 
+run:
+	python manage.py runserver
+
+# Desplegar la aplicación en Heroku
+deploy:
+	heroku apps:create --region eu
+	heroku addons:create heroku-postgresql:hobby-dev
+	heroku config:set SECRET_KEY=`openssl rand -base64 32`
+	git push heroku master
+	heroku run python manage.py migrate --noinput
+	heroku run python populate_db.py
+	heroku open
+```
+### Integración del despliegue automático con el repositorio en GitHub
+
+Para automatizar el inicio del despliegue cuando hacemos un ``push`` a la rama master de nuestro repositorio, nos vamos al dashboard de Heroku, activamos el despliegue automático, y marcamos la opción ``Wait for CI`` para que heroku espere que la integración continua termine antes de desplegar la aplicación.
+
+![Imagen 1](http://i1210.photobucket.com/albums/cc420/mj4ever001/hito31.png)
+
+### comprobacón del despliegue
+
+Para probar el despliegue desde local, seguimos los siguientes pasos
+
+**Prerrequisitos**
+
+Tener instalados [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) y [Heroku-CLI](https://devcenter.heroku.com/articles/heroku-command-line)
+
+
+**Clonamos el repositorio en local**
+
+``$ git clone https://github.com/Mustapha90/IV16-17.git``
+
+Lanzamos el desppliegue usando la herramienta ``make``
+
+``$ make deploy``
  

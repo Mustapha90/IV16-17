@@ -3,7 +3,6 @@
 from .common_settings import *
 
 DEBUG = True
-
 TEMPLATE_DEBUG = DEBUG
 
 # SECURITY WARNING: keep the secret key used in production secret!

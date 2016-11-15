@@ -1,4 +1,4 @@
-# instalar las dependencias
+# instalar las dependencias de desarrollo/test
 install_dev:
 	pip install -r dev_requirements.txt
 
@@ -19,6 +19,7 @@ test:
 run:
 	python manage.py runserver
 
+# Desplegar la aplicación en Heroku
 deploy:
 	heroku apps:create --region eu
 	heroku addons:create heroku-postgresql:hobby-dev
