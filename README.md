@@ -443,7 +443,9 @@ Para probar el despliegue desde local, hay que tener instalados [git](https://gi
 
 ``$ git clone https://github.com/Mustapha90/IV16-17.git``
 
-**Lanzamos el desppliegue usando la herramienta ``make``**
+``$ cd IV16-16``
+
+**Lanzamos el despliegue usando la herramienta ``make``**
 
 ``$ make deploy``
  
