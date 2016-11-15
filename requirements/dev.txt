@@ -1,3 +1,0 @@
-Django==1.7
-django-registration-redux==1.2
-whitenoise
