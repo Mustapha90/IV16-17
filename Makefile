@@ -1,6 +1,6 @@
 # instalar las dependencias
 install_dev:
-	pip install -r requirements/dev.txt
+	pip install -r dev_requirements.txt
 
 #Crear la base de datos
 migrate:
