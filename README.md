@@ -443,7 +443,7 @@ Para probar el despliegue desde local, hay que tener instalados [git](https://gi
 
 ``$ git clone https://github.com/Mustapha90/IV16-17.git``
 
-``$ cd IV16-16``
+``$ cd IV16-17``
 
 **Lanzamos el despliegue usando la herramienta ``make``**
 
