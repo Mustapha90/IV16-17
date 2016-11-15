@@ -8,9 +8,9 @@ Este proyecto consiste en crear la infraestructura para el alojamiento, funciona
 ##Índice
 
 1. [Descripción](#descripción)
-2. [Herramientas de dessarrollo](#Herramientas-de-dessarrollo)
-3. [Integración continua](#Integración-continua)
-4. [Despliegue en PaaS - Heroku](#Despliegue-en-PaaS---Heroku)
+2. [Herramientas de dessarrollo](#herramientas-de-dessarrollo)
+3. [Integración continua](#integración-continua)
+4. [Despliegue en PaaS - Heroku](#despliegue-en-paas---heroku)
 
 
 ##Descripción
@@ -184,15 +184,12 @@ Ahora nos vamos a nuestra cuenta de Travis, para ver el resultado de la integrac
 
 Como PaaS se ha elegido Heroku porque es muy fácil de usar, tiene una documentación muy buena, ofrece hasta cinco aplicaciónes y además permite usar PostgreSQL, todo esto sin ningún coste!
 
-###Algunos problemas
+###Separación de entornos
 
 Antes estabamos trabajando en un entorno de desarrollo/pruebas ahora se añade otro entorno, que es el entorno de producción (Heroku), antes usabamos sqlite3, en Heroku no podemos usarla, tenemos que usar PostgreSQL, otro problema que surge es que la configuración de las variables de entorno va a ser distinta, por ejemplo en un entorno de desarrollo, necesitamos activar el modo depuración, mientras en un PaaS la opción de depuración debe estar desactivada.
 
-Además las dependencias son diferentes en los dos entornos, y no tiene sentido usar el mismo fichero ``requirements.txt`` en Travis y en Heroku, estaremos instalando librerías que no se van a usar, estos problemas se resolverán en las siguientes secciones.
+Además las dependencias son diferentes en los dos entornos, y no tiene sentido usar el mismo fichero ``requirements.txt`` en Travis y en Heroku, estaremos instalando librerías que no se van a usar.
 
-###Separación de los entornos
-
-Para resolver los problemas anteriores vamos a separar los entornos.
 
 ####Separación de los archivos de configuración
 
@@ -210,7 +207,7 @@ Por defecto se trabajaŕa con la configuración de producción ya que más adela
 
 En el entorno de desarrollo trabajaremos con una base de datos ``sqlite3`` y tendremos el modo depuración activado
 
-Contenido del fichero dev_settings.py
+Contenido del fichero ``dev_settings.py``
 
 ```python
 # -*- coding: utf-8 -*-
@@ -243,7 +240,7 @@ Antes teníamos un fichero de depencencias ``requirements.txt``, este fichero lo
 
 ###Preparación de la app para el despliegue
 
-###Configuración del contenido estático
+####Configuración del contenido estático
 
 Hay que añadir la configuración correcta para que nuestra aplicación podrá servir contenido estático en el Paas.
 
@@ -267,7 +264,7 @@ Añadimos la siguiente linea en el fichero de configuración ``common_settings.p
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 ```
 
-###Configuración de las variables de entorno
+####Configuración de las variables de entorno
 
 Para configurar las variables de entorno en el PaaS usaremos los paquetes python-decouple y dj-database-url.
 
@@ -276,7 +273,7 @@ Editamos el fichero de configuración de producción:
 ```python
 # -*- coding: utf-8 -*-
 
-# Importar la configuracion comun
+# Importar la configuración común
 from .common_settings import *
 
 from decouple import config
@@ -303,7 +300,7 @@ ALLOWED_HOSTS = [".herokuapp.com"]
 
 Para desplegar la aplicación necesitamos los siguientes ficheros de configuración:
 
-**``requirements.txt``**
+``requirements.txt``
 
 Contiene las dependencias necesarias para el despliegue en el PaaS
 
@@ -336,33 +333,33 @@ web: gunicorn tango_with_django_project.wsgi --log-file -
 
 ###Despliegue en Heroku
 
-Ya tenemos la configuración  necesaria para empezar el despliegue.
+Ya tenemos la configuración necesaria para desplegar la aplicación en heroku.
 
-Creamos la app en Heroku especificando la región y el nombre de la app
+-Creamos la app en Heroku especificando la región y el nombre de la app
 
 ``$ heroku apps:create --region eu appiv``
 
-Creamos la base de datos
+-Creamos la base de datos
 
 ``$ heroku addons:create heroku-postgresql:hobby-dev``
 
-Creamos la variable de entonro SECRET_KEY en Heroku
+-Creamos la variable de entonro SECRET_KEY en Heroku
 
 ``$ heroku config:set SECRET_KEY=`openssl rand -base64 32` ``
 
-Iniciamos el despliegue de la aplicación
+-Iniciamos el despliegue de la aplicación
 
 ``$ git push heroku master``
 
-Creamos las tablas de la base de datos
+-Creamos las tablas de la base de datos
 
 ``$ heroku run python manage.py migrate --noinput``
 
-Rellenamos la base de datos
+-Rellenamos la base de datos
 
 ``$ heroku run python populate_db.py``
 
-Ya podemos ver el resultado del despliegue ingresando la url de nuestra aplicación en Heroku o ejecutando:
+-Ya podemos ver el resultado del despliegue ingresando la url de nuestra aplicación en Heroku o ejecutando:
 
 ``$ heroku open``
 
@@ -378,7 +375,7 @@ Actualizamos el fichero ``.travis.yml`` para que la integración continua funcio
 language: python
 python:
   - "2.7"
-```
+
 # Antes de instalar, exportar la variable de entorno para trabajar con la configuración de desarrollo
 before_install:
   - export DJANGO_SETTINGS_MODULE=tango_with_django_project.dev_settings
@@ -398,6 +395,8 @@ script:
 ```
 
 Actualizamos el Makefile:
+
+```
 # instalar las dependencias de desarrollo/test
 install_dev:
 	pip install -r dev_requirements.txt
@@ -429,26 +428,22 @@ deploy:
 	heroku run python populate_db.py
 	heroku open
 ```
+
 ### Integración del despliegue automático con el repositorio en GitHub
 
 Para automatizar el inicio del despliegue cuando hacemos un ``push`` a la rama master de nuestro repositorio, nos vamos al dashboard de Heroku, activamos el despliegue automático, y marcamos la opción ``Wait for CI`` para que heroku espere que la integración continua termine antes de desplegar la aplicación.
 
 ![Imagen 1](http://i1210.photobucket.com/albums/cc420/mj4ever001/hito31.png)
 
-### comprobacón del despliegue
+### Despliegue automático desde local
 
-Para probar el despliegue desde local, seguimos los siguientes pasos
-
-**Prerrequisitos**
-
-Tener instalados [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) y [Heroku-CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-
+Para probar el despliegue desde local, hay que tener instalados [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) y [Heroku-CLI](https://devcenter.heroku.com/articles/heroku-command-line)
 
 **Clonamos el repositorio en local**
 
 ``$ git clone https://github.com/Mustapha90/IV16-17.git``
 
-Lanzamos el desppliegue usando la herramienta ``make``
+**Lanzamos el desppliegue usando la herramienta ``make``**
 
 ``$ make deploy``
  
