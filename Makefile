@@ -18,3 +18,12 @@ test:
 # Lanzar la aplicación 
 run:
 	python manage.py runserver
+
+deploy:
+	heroku apps:create --region eu
+	heroku addons:create heroku-postgresql:hobby-dev
+	heroku config:set SECRET_KEY=''
+	git push heroku master
+	python manage.py migrate --noinput
+	python populate_db.py
+	heroku open
