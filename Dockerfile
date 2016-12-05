@@ -17,7 +17,7 @@ EXPOSE 8000
 
 WORKDIR IV16-17
 RUN make install_prod
-ENTRYPOINT ["./docker-entrypoint.sh"]
+
 
 
 
