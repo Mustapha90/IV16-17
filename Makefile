@@ -2,6 +2,9 @@
 install_dev:
 	pip install -r dev_requirements.txt
 
+install_prod:
+	pip install -r requirements.txt
+
 #Crear la base de datos
 migrate:
 	python manage.py makemigrations --noinput
