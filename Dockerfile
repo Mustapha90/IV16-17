@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:14.04
 MAINTAINER Mustapha Mayo
 
 RUN sudo apt-get -y update
