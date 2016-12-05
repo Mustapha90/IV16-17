@@ -8,6 +8,7 @@ import dj_database_url
 
 EN_DOCKER = os.getenv('EN_DOCKER')
 ON_HEROKU = 'ON_HEROKU' in os.environ
+
 # Si estamos en Heroku
 if ON_HEROKU:  
     # Configuramos la variable de entorno secret_key en el Paas
@@ -25,17 +26,10 @@ if ON_HEROKU:
 
 elif EN_DOCKER:
     DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dffvilk1d8s44b',
-        'USER': 'xwskwpqbdialqo',
-        'PASSWORD': 'za9l3xiwVmAAVZ5_mKDgaWyjyE',
-        'HOST': 'ec2-54-75-233-92.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-        }
-     }
+          'default': dj_database_url.config(
+          default=config('DATABASE_URL')
+          )
+    }
     DEBUG = False
-    SECRET_KEY = 'Hola'
+    SECRET_KEY = os.getenv('SECRET_KEY')
     ALLOWED_HOSTS = ['*']
-
-
