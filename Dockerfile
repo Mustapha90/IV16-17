@@ -1,6 +1,8 @@
 FROM ubuntu:14.04
 MAINTAINER Mustapha Mayo
 
+ENV EN_DOCKER=true
+
 RUN sudo apt-get -y update
 
 RUN sudo apt-get install -y git
@@ -13,8 +15,5 @@ RUN sudo git clone https://github.com/Mustapha90/IV16-17.git
 RUN cd IV16-17 && make install_prod 
 RUN cd IV16-17 && make migrate
 RUN cd IV16-17 && make populate
-
-
-ENV EN_DOCKER=true
 
 
