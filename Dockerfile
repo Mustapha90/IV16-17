@@ -5,7 +5,7 @@ RUN sudo apt-get -y update
 
 RUN sudo apt-get install -y git
 
-RUN sudo apt-get install -y build-essential python-setuptools python-dev
+RUN sudo apt-get install -y build-essential python-setuptools python-dev libpq-dev
 RUN sudo easy_install pip
 RUN sudo pip install --upgrade pip
 
