@@ -8,8 +8,8 @@ import dj_database_url
 
 EN_DOCKER = os.getenv('EN_DOCKER')
 
-if 'DYNO' in os.environ:
-: #Si se ejecuta en Heroku
+# Si estamos en Heroku
+if 'DYNO' in os.environ:  
     # Configuramos la variable de entorno secret_key en el Paas
     SECRET_KEY = config('SECRET_KEY')
     # Configuramos la variable de entorno de depuración
