@@ -18,8 +18,13 @@ populate:
 test:
 	python manage.py test
 
+run_prod:
+	python manage.py collectstatic --noinput
+	gunicorn tango_with_django_project.wsgi --log-file -
+
 # Lanzar la aplicación 
 run:
+	python manage.py collectstatic --noinput
 	python manage.py runserver
 
 # Desplegar la aplicación en Heroku
