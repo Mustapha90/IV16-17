@@ -18,7 +18,7 @@ EXPOSE 8000
 
 WORKDIR $RUTA_PROYECTO
 RUN make install_prod
-ENTRYPOINT ["$RUTA_PROYECTO/docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 
 
