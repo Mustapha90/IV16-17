@@ -7,11 +7,10 @@ RUN sudo apt-get install -y git
 
 RUN sudo apt-get install -y build-essential python-setuptools python-dev libpq-dev
 RUN sudo easy_install pip
+RUN sudo pip install --upgrade pip
 
 RUN sudo git clone https://github.com/Mustapha90/IV16-17.git
 RUN cd IV16-17 && make install_prod 
-RUN cd IV16-17 make migrate
-RUN cd IV16-17 make populate
-
-ENV ENDOCKER=true
+RUN make migrate
+RUN make populate
 
