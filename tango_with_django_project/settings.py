@@ -7,9 +7,9 @@ from decouple import config
 import dj_database_url
 
 EN_DOCKER = os.getenv('EN_DOCKER')
-EN_HEROKU = os.getenv('DYNO_RAM')
 
-if EN_HEROKU: #Si se ejecuta en Heroku
+if if 'DYNO' in os.environ:
+: #Si se ejecuta en Heroku
     # Configuramos la variable de entorno secret_key en el Paas
     SECRET_KEY = config('SECRET_KEY')
     # Configuramos la variable de entorno de depuración
