@@ -2,6 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Mustapha Mayo
 
 ENV EN_DOCKER=true
+ENV RUTA_PROYECTO=/IV16-17
 
 RUN sudo apt-get -y update
 
@@ -12,7 +13,13 @@ RUN sudo easy_install pip
 RUN sudo pip install --upgrade pip
 
 RUN sudo git clone https://github.com/Mustapha90/IV16-17.git
-RUN cd IV16-17 && make install_prod 
+
+EXPOSE 8000
+
+WORKDIR $RUTA_PROYECTO
+RUN make install_prod
+ENTRYPOINT ["$RUTA_PROYECTO/docker-entrypoint.sh"]
+
 
 
 
