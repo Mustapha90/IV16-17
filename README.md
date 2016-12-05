@@ -343,6 +343,10 @@ Ya tenemos la configuración necesaria para desplegar la aplicación en heroku.
 
 ``$ heroku addons:create heroku-postgresql:hobby-dev``
 
+-Creamos una variable de entorno que indica que el entorno es Heroku
+
+``$ heroku config:set ON_HEROKU=1``
+
 -Creamos la variable de entonro SECRET_KEY en Heroku
 
 ``$ heroku config:set SECRET_KEY=`openssl rand -base64 32` ``
@@ -422,6 +426,7 @@ run:
 deploy:
 	heroku apps:create --region eu
 	heroku addons:create heroku-postgresql:hobby-dev
+	heroku config:set ON_HEROKU=1
 	heroku config:set SECRET_KEY=`openssl rand -base64 32`
 	git push heroku master
 	heroku run python manage.py migrate --noinput
