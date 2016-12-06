@@ -18,8 +18,10 @@ populate:
 test:
 	python manage.py test
 
-run_prod:
+staticfiles:
 	python manage.py collectstatic --noinput
+
+docker_run:
 	gunicorn tango_with_django_project.wsgi -b 0.0.0.0:8000 --log-file -
 
 # Lanzar la aplicación 
