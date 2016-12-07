@@ -24,7 +24,6 @@ En principio se usarán las siguientes tecnologías/herramientas:
 * Python.
 * Framework Django
 * SQLite.
-* AJAX.
 * JQuery.
 * Bootstrap
 * HTML y CSS
