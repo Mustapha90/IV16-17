@@ -38,7 +38,7 @@ class TestViews(TestCase):
         """
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No hay categorias.")
+        self.assertContains(response, "No hay bares")
         self.assertQuerysetEqual(response.context['categories'], [])
      
     def test_view_con_bares(self):
