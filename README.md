@@ -477,11 +477,6 @@ La aplicación depende de dos variables de entorno SECRET_KEY que es una clave s
 
 ``sudo docker run -e "SECRET_KEY=<Clave_Secreta>" -e "DATABASE_URL=<Enlace a BD>" -i -t mustapha90/iv16-17``
 
-
-####Ejecución de purebas
-
-``make test``
-
 ####Lanzar la aplicación
 
 ``make docker_run``
