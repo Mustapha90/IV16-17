@@ -6,9 +6,6 @@ make migrate
 #Rellenar la base de datos
 make populate
 
-#Lanzar tests
-make test
-
 #Preparar los ficheros estáticos necesarios para el despliegue
 make staticfiles
 
