@@ -8,16 +8,17 @@ Este proyecto consiste en crear la infraestructura para el alojamiento, funciona
 ##Índice
 
 1. [Descripción](#descripción)
-2. [Herramientas de dessarrollo](#herramientas-de-dessarrollo)
+2. [Herramientas de desarrollo](#herramientas-de-desarrollo)
 3. [Integración continua](#integración-continua)
 4. [Despliegue en PaaS - Heroku](#despliegue-en-paas---heroku)
+5. [Entorno de pruebas - Docker](#entorno-de-pruebas---docker)
 
 
 ##Descripción
 
 Aplicación web que permite a los usuarios encontrar bares a visitar, localizarlos y consultar las tapas que hay disponibles, también se permitirá a los usuarios votar sobre las tapas y bares, registrarse y probablemente hacer reservas.
 
-##Herramientas de dessarrollo
+##Herramientas de desarrollo
 En principio se usarán las siguientes tecnologías/herramientas:
 
 * Python.
@@ -453,4 +454,38 @@ Para probar el despliegue desde local, hay que tener instalados [git](https://gi
 **Lanzamos el despliegue usando la herramienta ``make``**
 
 ``$ make deploy``
- 
+
+##Entorno de pruebas - Docker
+
+Docker permite crear infraestructuras reproducibles que permiten aislar la ejecución de aplicaciones lo que hace más fácil los procesos de prueba y despliegue.
+
+La imagen se ha creado usando un fichero [Dockerfile](https://github.com/Mustapha90/IV16-17/blob/master/Dockerfile) y un script [docker_entrypoint.sh](https://github.com/Mustapha90/IV16-17/blob/master/docker_entrypoint.sh) que funciona como punto de entrada al contenedor.
+
+La imagen del proyecto se puede encontrar en el siguiente [repositorio de Docker Hub](https://hub.docker.com/r/mustapha90/iv16-17/) que está configurado con este repositorio de GitHub para construir la imagen automáticamente.
+
+###Uso
+
+Para disponer del entrorno y probarlo hay que seguir estos pasos:
+
+####Descargar la imagen
+
+``sudo docker pull mustapha90/iv16-17``
+
+####Arrancar el contenedor
+
+La aplicación depende de dos variables de entorno SECRET_KEY que es una clave secreta (El usuario puede usar cualquiera), y DATABASE_URL, que es la URL de la base de datos remota, estas variables hay que pasarlas al contenedor usando el siguiente comando.
+
+``sudo docker run -e "SECRET_KEY=<Clave_Secreta>" -e "DATABASE_URL=<Enlace a BD>" -i -t mustapha90/iv16-17``
+
+
+####Ejecución de purebas
+
+``make test``
+
+####Lanzar la aplicación
+
+``make docker_run``
+
+La documentación detallada de este apartado se puede consultar en el siguiente enlace:
+
+>####[Documentación detallada]()
