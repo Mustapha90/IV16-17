@@ -13,7 +13,7 @@
 </style>
     <link rel="shortcut icon" href="{% static 'img/twd.ico'%}" />
 
-    <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+    <title>Bar adviser - {% block title %}How to Tango with Django!{% endblock %}</title>
 
 
   <script>
@@ -44,17 +44,17 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="brand" href="/rango/">Rango</a>
+            <a class="brand" href="/rango/">Bar Adviser</a>
 
             <div class="nav-collapse collapse">
                 <ul class="nav pull-right">
                     {% if user.is_authenticated %}
                     <li class="navbar-text">Welcome, {{ user.username }}!</li>
                     <li><a href="/rango/profile/">Profile</a></li>
-                    <li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+                    <li><a href="{% url 'auth_logout' %}?next=/rango/">Salir</a></li>
                         {% else %}
 
-                    <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    <li><a href="{% url 'registration_register' %}">Registrarse</a></li>
                     <li><a href="{% url 'auth_login' %}">Login</a></li>
 
                     {% endif %}
@@ -65,11 +65,6 @@
                     <!-- <li><a href="/rango/restricted/">Restricted</a></li> -->
                     <li><a href="/rango/add_category/">Add Category</a></li>
                     {% endif %}
-
-                    <!--- <li><a href="/rango/search">Search</a></li> -->
-                    <li><a href="http://www.tangowithdjango.com/">TWD</a></li>
-                    <li><a href="http://www.tangowithdjango.com/book/">Book</a></li>
-                    <li><a href="/rango/about/">About</a></li>
 
         <input id="submit2" type="button" value="A+" />
         <input id="submit3" type="button" value="A++" />
@@ -94,7 +89,7 @@
                 </ul>
 
 		<ul class="nav nav-list">
-			<li class="nav-header">Find a Category</li>
+			<li class="nav-header">Buscar bares</li>
 			<form>
 			<label></label>
 			<li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
@@ -152,7 +147,7 @@ $(document).ready(function(){
 
 <footer>
     <div class="container">
-        <p>&copy; Rango: How to Tango with Django 2013</p>
+        <p>&copy; Rango: 2013</p>
     </div>
 </footer>
 

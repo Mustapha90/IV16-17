@@ -460,7 +460,7 @@ La imagen del proyecto se puede encontrar en el siguiente [repositorio de Docker
 
 ###Uso
 
-Para disponer del entrorno y probarlo hay que seguir estos pasos:
+Para disponer del entorno y probarlo hay que seguir estos pasos:
 
 ####Instalar Docker
 

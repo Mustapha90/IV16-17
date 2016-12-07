@@ -1,22 +1,22 @@
 {% extends "rango/base.html" %}
 
-{% block title %}Welcome to Rango!{% endblock %}
+{% block title %}Bienvenido a Bar Adviser!{% endblock %}
 
 {% block body_block %}
 
 
 
 <div class="hero-unit">
-    <h1>Ready to Rango</h1>
+    <h1>Bar Adviser</h1>
 
-    <p>Find, Add, Share and Rango useful links and resources.</p>
+    <p>Tu guía de bares y restaurantes de españa</p>
 </div>
 
 
 <div class="row-fluid">
     <div class="span6">
 
-        <h2>Top Five Categories</h2>
+        <h2>Top 5 bares</h2>
         {% if categories %}
         <ul>
             {% for category in categories %}
@@ -25,13 +25,13 @@
             {% endfor %}
         </ul>
         {% else %}
-        <strong>No hay categorias.</strong>
+        <strong>No hay bares</strong>
         {% endif %}
 
     </div>
     <!--/span-->
     <div class="span6">
-        <h2>Top Five Pages</h2>
+        <h2>Top 5 tapas</h2>
         {% if pages %}
         <ul>
             {% for page in pages %}
@@ -39,7 +39,7 @@
             {% endfor %}
         </ul>
         {% else %}
-        <strong>No pages at present.</strong>
+        <strong>No hay tapas.</strong>
         {% endif %}
 
     </div>
