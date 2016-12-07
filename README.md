@@ -461,11 +461,17 @@ Docker permite crear infraestructuras reproducibles que permiten aislar la ejecu
 
 La imagen se ha creado usando un fichero [Dockerfile](https://github.com/Mustapha90/IV16-17/blob/master/Dockerfile) y un script [docker_entrypoint.sh](https://github.com/Mustapha90/IV16-17/blob/master/docker_entrypoint.sh) que funciona como punto de entrada al contenedor.
 
-La imagen del proyecto se puede encontrar en el siguiente [repositorio de Docker Hub](https://hub.docker.com/r/mustapha90/iv16-17/) que está configurado con este repositorio de GitHub para construir la imagen automáticamente.
+La imagen del proyecto se puede encontrar en el siguiente [repositorio de Docker Hub](https://hub.docker.com/r/mustapha90/iv16-17/) que está configurado con el repositorio de GitHub para construir la imagen automáticamente, consulte el siguiente enlace para obtener más información:
+
+[Configure automated builds from GitHub](https://docs.docker.com/docker-hub/github/)
 
 ###Uso
 
 Para disponer del entrorno y probarlo hay que seguir estos pasos:
+
+####Instalar Docker
+
+``wget -qO- https://get.docker.com/ | sh``
 
 ####Descargar la imagen
 
@@ -481,6 +487,6 @@ La aplicación depende de dos variables de entorno SECRET_KEY que es una clave s
 
 ``make docker_run``
 
-La documentación detallada de este apartado se puede consultar en el siguiente enlace:
+Para acceder a la aplicación desde fuera del contenedor accedemos a la dirección usando el navegador:
 
->####[Documentación detallada]()
+``http://<IP Contenedor>:8000/``
