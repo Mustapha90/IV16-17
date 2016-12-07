@@ -458,7 +458,7 @@ La imagen del proyecto se puede encontrar en el siguiente [repositorio de Docker
 
 [Configure automated builds from GitHub](https://docs.docker.com/docker-hub/github/)
 
-###Uso
+###Instrucciones para usar el entorno
 
 Para disponer del entorno y probarlo hay que seguir estos pasos:
 
