@@ -6,6 +6,9 @@ make migrate
 #Rellenar la base de datos
 make populate
 
+#Lanzar tests
+make test
+
 #Preparar los ficheros estáticos necesarios para el despliegue
 make staticfiles
 
@@ -14,9 +17,6 @@ echo "$(tput setaf 3)IP del contenedor:  $(tput setaf 6)$(/sbin/ifconfig eth0 | 
 
 #Para Lanzar la aplicación
 printf "\nPara Lanzar la aplicación:\nmake docker_run\n"
-
-#Lanzar tests
-make test
 
 #Lanzar el shell, esto permite que permanacer dentro del contenedor
 /bin/bash
