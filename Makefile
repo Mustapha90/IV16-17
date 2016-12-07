@@ -10,7 +10,7 @@ migrate:
 	python manage.py makemigrations --noinput
 	python manage.py migrate --noinput
     
-#rellenar la base de datos
+#Rellenar la base de datos
 populate:
 	python populate_db.py
 
