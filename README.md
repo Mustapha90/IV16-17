@@ -475,7 +475,7 @@ Para disponer del entrorno y probarlo hay que seguir estos pasos:
 
 La aplicación depende de dos variables de entorno SECRET_KEY que es una clave secreta (El usuario puede usar cualquiera), y DATABASE_URL, que es la URL de la base de datos remota, estas variables hay que pasarlas al contenedor usando el siguiente comando.
 
-``sudo docker run -e "SECRET_KEY=<Clave_Secreta>" -e "DATABASE_URL=<Enlace a BD>" -i -t mustapha90/iv16-17``
+``sudo docker run -e "SECRET_KEY=<Clave_Secreta>" -e "DATABASE_URL=<Enlace_BD>" -i -t mustapha90/iv16-17``
 
 ####Lanzar la aplicación
 
