@@ -476,6 +476,10 @@ La aplicación depende de dos variables de entorno ``SECRET_KEY`` que es una cla
 
 ``sudo docker run -e "SECRET_KEY=<Clave_Secreta>" -e "DATABASE_URL=<Enlace_BD>" -i -t mustapha90/iv16-17``
 
+Formato de una URL de una base de datos Postgres remota:
+
+``postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>``
+
 ####Lanzar la aplicación
 
 ``make docker_run``
