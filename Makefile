@@ -1,4 +1,4 @@
-# instalar las dependencias de desarrollo/test
+# instalar las dependencias de desarrollo
 install_dev:
 	pip install -r dev_requirements.txt
 
