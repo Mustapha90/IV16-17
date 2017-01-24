@@ -10,7 +10,7 @@ setgid www-data
 chdir ~/{{ project_name }}
 
 env PYTHONPATH=~/{{ project_name }}
-env EN_PROD={{ EN_PROD }}
+env EN_PROD=$EN_PROD
 env SECRET_KEY={{ SECRET_KEY }}
 env API_KEY={{ API_KEY }}
 env DATABASE_URL={{ DATABASE_URL }}
