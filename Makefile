@@ -5,7 +5,7 @@ install_dev:
 install_prod:
 	pip install -r requirements.txt
 
-#migrate and makemigrations
+#makemigrations and migrate
 migrate:
 	python manage.py makemigrations --noinput
 	python manage.py migrate --noinput
