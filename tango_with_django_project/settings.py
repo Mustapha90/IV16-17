@@ -22,7 +22,7 @@ if ON_HEROKU:
           )
     }
     #Permitir el acceso al host de heroku
-    ALLOWED_HOSTS = [".herokuapp.com"]
+    ALLOWED_HOSTS = ["*"]
 
 elif EN_DOCKER:
     DATABASES = {
