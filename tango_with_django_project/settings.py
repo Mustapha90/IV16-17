@@ -7,10 +7,10 @@ from decouple import config
 import dj_database_url
 
 EN_DOCKER = os.getenv('EN_DOCKER')
-ON_HEROKU = 'ON_HEROKU' in os.environ
+EN_PROD = 'EN_PROD' in os.environ
 
 # Si estamos en Heroku
-if ON_HEROKU:  
+if EN_PROD:  
     # Configuramos la variable de entorno secret_key en el Paas
     SECRET_KEY = config('SECRET_KEY')
     # Configuramos la variable de entorno de depuración

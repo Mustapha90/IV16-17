@@ -5,9 +5,13 @@ install_dev:
 install_prod:
 	pip install -r requirements.txt
 
-#Crear la base de datos
+#migrate and makemigrations
 migrate:
 	python manage.py makemigrations --noinput
+	python manage.py migrate --noinput
+
+#migrate
+migrate_:
 	python manage.py migrate --noinput
     
 #Rellenar la base de datos
@@ -33,7 +37,7 @@ run:
 deploy:
 	heroku apps:create --region eu
 	heroku addons:create heroku-postgresql:hobby-dev
-	heroku config:set ON_HEROKU=1
+	heroku config:set EN_PROD=1
 	heroku config:set SECRET_KEY=`openssl rand -base64 32`
 	git push heroku master
 	heroku run python manage.py migrate --noinput
