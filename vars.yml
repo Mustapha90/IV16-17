@@ -1,0 +1,65 @@
+---
+
+
+#************Credenciales azure: hay que editar estas variables*************************
+# Dar un nombre para la MV
+vm_name: nombre_maquina
+
+# Un nombre de usuario
+vm_user: usuario_maquina
+
+# Contraseña de la MV
+vm_password: *******
+
+# Ruta absoluta del certificado de azure, previamente generado
+mgmt_certificate_path: /path/to/azure_file.pem
+
+# id de la subscripción de azure, necesario para la creación de la MV                  
+subscription_id: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+#***************************************************************************************
+
+
+
+
+#****************** Variables de entorno de la app, hay que modificarlas****************
+# Elegir una clave secreta (Django SECRET_KEY)
+SECRET_KEY: *******
+
+# URL de la base de datos postgres 
+DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
+
+#***************************************************************************************
+
+
+
+
+
+
+# ****************Estas variables no se modifican!!***********************************
+ 
+# Variables de entorno que indica que el entorno es de producción
+EN_PROD: 1
+
+# Variables de la app
+project_name: IV16-17
+project_repo: https://github.com/Mustapha90/IV16-17.git
+install_root: /srv
+static_root: "{{ install_root }}/{{ project_name }}/static"
+wsgi_module: tango_with_django_project.wsgi
+
+
+# Dirección del servidor
+server_name: "{{ vm_name }}.cloudapp.net www.{{ vm_name }}.cloudapp.net"
+
+
+# Dependencias del sistema
+system_packages:
+  - git
+  - nginx
+  - gunicorn
+  - python-setuptools
+  - python-dev
+  - build-essential
+  - python-pip
+  - libpq-dev
+# ***************************************************************************************
