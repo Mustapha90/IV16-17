@@ -1,4 +1,4 @@
-#Despliegue en IaaS - Azure Vagrant + Ansible + Fabric
+#Despliegue en IaaS - Azure (Vagrant + Ansible + Fabric)
 
 Primero instalamos las herramientas necesarias.
 
@@ -161,13 +161,13 @@ Creamos un fichero ``provision.yml`` para ``ansible``
 
 ```
 
-Ansible se encargará de instalar los paquetes del sistema, y copiar los ficheros de configuración ``gunicorn.j2`` y ``nginx.j2`` a la máquina remota, usando la directiva ``template``, las variables que hemos visto en los ficheros de configuración se reemplazaran por su contenido antes de copiar los ficheros.
+Ansible se encargará de instalar los paquetes del sistema, y copiar los ficheros de configuración ``gunicorn.j2`` y ``nginx.j2`` a la máquina remota, usando la directiva ``template``, las variables que hemos visto en los ficheros de configuración se reemplazarán por su contenido antes de copiar los ficheros.
 
 Creamos un fichero ``Vagrantfile`` con la configuración necesaria para desplegar la máquina virtual:
 
 **Vagrantfile**
 
-```
+```ruby
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -245,7 +245,7 @@ Lanzamos el despliegue:
 
 Para desplegar la aplicación con Fabric he creado un fichero ``fabfile.py``
 
-```
+```python
 import os
 import yaml
 from fabric.contrib.files import exists
