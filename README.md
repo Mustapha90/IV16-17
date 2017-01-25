@@ -590,4 +590,3 @@ vm_name.cloudapp.net
 
 Donde ``vm_name`` es el nombre de la máquina virtual que hemos especificado en el fichero ``vars.yml``
 
-
