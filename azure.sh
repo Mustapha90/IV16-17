@@ -10,10 +10,8 @@ sudo apt-get install -y vagrant
 sudo vagrant plugin install vagrant-azure
 
 #Instalar pip
-sudo apt-get install -y python-pip
-
-#Actualizar pip
-sudo pip install -U pip
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+sudo python get-pip.py
 
 #Instalar ansible
 sudo pip install paramiko PyYAML jinja2 httplib2 ansible
