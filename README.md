@@ -12,6 +12,7 @@ Este proyecto consiste en crear la infraestructura para el alojamiento, funciona
 3. [Integración continua](#integración-continua)
 4. [Despliegue en PaaS - Heroku](#despliegue-en-paas---heroku)
 5. [Entorno de pruebas - Docker](#entorno-de-pruebas---docker)
+6. [Despliegue en IaaS - Azure](#Despliegue-en-IaaS---Azure)
 
 
 ##Descripción
@@ -489,3 +490,101 @@ Para visualizar la aplicación desde un navegador del sistema anfitrión introdu
 ``http://<IP>:8000/``
 
 Donde ``<IP>`` es La dirección IP del contenedor que se puede obtener ejecutando el comando ``ifconfig``
+
+#Despliegue en IaaS - Azure
+
+El despliegue se ha realizado en **Azure**.
+
+El proceso se ha dividido en dos pasos, despliegue y provisionamiento de la máquina virtual con ``Vagrant`` y ``Ansible``, y despliegue remoto de la aplicación usando ``Fabric``, además se ha creado un script que automatiza el proceso entero con el objetivo de poder desplegar aplicación con su soporte virtual partiendo desde 0 es decir disponiendo solamente de una cuenta **Azure**.
+
+La aplicación se ha desplegado con ``nginx`` y ``gunicorn`` para lograr un buen rendimiento, ``nginx``
+se encargará de servir el contenido estático de la aplicación y funcionar como proxy inverso de ``gunicorn``, los ficheros de configuracón se pueden consultar en [nginx.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/nginx.j2) y [gunicorn.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/gunicorn.j2), para ``gunicorn`` el fichero de configuración se copia en ``/etc/init/gunicorn.conf`` (Método Upstart) esto permitirá controlar el servidor ``gunicorn``de manera remota usando Fabric, [Leer más sobre Linux Upstart](https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it)
+
+## Despliegue y provisionamiento de la máquina virtual **Vagrant** + **Ansible**
+
+Teniendo en cuenta que la reproducción debe ser escalable y reproducible se ha creado un fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml) que contiene todas las variables necesarias para el despliegue incluyendo las variables de entorno de la aplicación este fichero se usará por Vagrant, Ansible y Fabric.
+
+Para el despliegue de la máquina se ha usado ``Vagrant`` y el plugin ``vagrant-azure``, para ello se ha creado un fichero [Vagrantfile](https://github.com/Mustapha90/IV16-17/blob/master/Vagrantfile), que contiene la configuración con la que se desplegará la máquina.
+
+Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml), además se ha creado un fichero [ansible_hosts](https://github.com/Mustapha90/IV16-17/blob/master/ansible_hosts) que la información necesaria para localizar la máquina virtual, en este caso se ha usado la misma configuración usada en ``Vagrantfile``.
+
+[Consulte más información sobre este proceso]()
+
+## Despliegue remoto de la aplicación - Fabric
+
+El despliegue de la aplicación se ha realizado con Fabric, para ello se ha creado un fichero [fabfile.py](https://github.com/Mustapha90/IV16-17/blob/master/fabfile.py) que contiene las instrucciones necesarias para desplegar la aplicación.
+
+Para desplegar la aplicación se usa el comando:
+
+``$ fab deploy``
+
+Que desplegará la aplicación en la máquina remota, cuyos datos (vm_user,vm_name,vm_pass etc) se encuentran en el fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml). Este comando sirve también para actualizar una aplicación ya desplegada, ya que no solamente clona el repositorio sino comprueba si ya existe y realiza un ``git fetch`` para obtener los últimos cambios y vuelve a desplegar la aplicación, por último reinicia los servidores ``gunicorn`` y ``nginx``.
+
+La aplicación se encuentra desplegada en el siguiente enlace:
+
+[proyectoiv1617.cloudapp.net](proyectoiv1617.cloudapp.net)
+
+[Consulte la documentación detallada del proceso]()
+
+
+## Despliegue automático en Azure desde 0
+
+Para desplegar la aplicación con su soporte virtual desde 0 en Azure, se necesita un fichero ``azure_key.pem`` y el id de la subscipción de Azure, se puede seguir este tutorial para obtenerlos:
+
+[Instalar Azure-CLI y configurar las credenciales](https://github.com/Mustapha90/IV16-17/blob/documentacion/AzureConfig.md)
+ 
+Después instalamos git:
+
+``$ sudo apt-get install git``
+
+Clonamos el repositorio de la aplicación:
+
+``$ git clone https://github.com/Mustapha90/IV16-17.git``
+
+Cambiamos de directorio
+
+``$ cd IV16-17/``
+
+Editamos esta parte del fichero ``vars.yml``, lo demás de deja intacto:
+
+```yml
+#************Credenciales azure: hay que editar estas variables*************************
+# Dar un nombre para la MV
+vm_name: nombre_maquina
+
+# Un nombre de usuario
+vm_user: usuario_maquina
+
+# Contraseña de la MV
+vm_password: *******
+
+# Ruta absoluta del certificado de azure, previamente generado
+mgmt_certificate_path: /path/to/azure_file.pem
+
+# id de la subscripción de azure, necesario para la creación de la MV                  
+subscription_id: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+#***************************************************************************************
+
+
+#****************** Variables de entorno de la app, hay que modificarlas****************
+# Elegir una clave secreta (Django SECRET_KEY)
+SECRET_KEY: *******
+
+# URL de la base de datos postgres 
+DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
+
+#***************************************************************************************
+
+``` 
+
+Guardamos el fichero ``vars.yml``, y ejecutamos el script azure.sh:
+ 
+``$ ./azure.sh``
+
+Cuando termine el script podemos visualizar la aplicacion en el navegador usando el siguiente enlace:
+
+<vm_name>.cloudapp.net
+
+donde ``vm_name`` es el nombre de la máquina virtual especificado en el fichero ``vars.yml``
+
+
