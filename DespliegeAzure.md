@@ -303,13 +303,17 @@ def deploy():
     restart_nginx()
 ```
 
-Este fichero permite desplegar la aplicación y también actualizar la aplicaión y volver a desplegarla si ya ha sido desplegada.
+Este fichero permite desplegar la aplicación y también actualizarla y volver a desplegarla si ya ha sido desplegada.
+
+Se ha usado el módulo ``shell_env`` que permite configurar las variables de entorno antes de ejecutar los comandos, por ejemplo ``make migrate`` depende de la variables de entorno ``DATABASE_URL`` para configurar la base de datos.
+
+
 
 Para desplegar la aplicación ejecutamos:
 
 ``$ fab deploy``
 
-No hace falta especificar el host ni la contraseña de la máquina virtual ya que las variables se leen del fichero ``vars.yml``
+No hace falta especificar el host ni la contraseña de la máquina virtual ya que estos datos y otros se cargan desde el fichero ``vars.yml``
 
 ![Imagen 2](http://i1210.photobucket.com/albums/cc420/mj4ever001/hitofinal2.png)
 
