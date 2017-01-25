@@ -491,7 +491,7 @@ Para visualizar la aplicación desde un navegador del sistema anfitrión introdu
 
 Donde ``<IP>`` es La dirección IP del contenedor que se puede obtener ejecutando el comando ``ifconfig``
 
-#Despliegue en IaaS - Azure
+##Despliegue en IaaS - Azure
 
 El despliegue se ha realizado en **Azure**.
 
@@ -500,7 +500,7 @@ El proceso se ha dividido en dos pasos, despliegue y provisionamiento de la máq
 La aplicación se ha desplegado con ``nginx`` y ``gunicorn`` para lograr un buen rendimiento, ``nginx``
 se encargará de servir el contenido estático de la aplicación y funcionar como proxy inverso de ``gunicorn``, los ficheros de configuracón se pueden consultar en [nginx.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/nginx.j2) y [gunicorn.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/gunicorn.j2), para ``gunicorn`` el fichero de configuración se copia en ``/etc/init/gunicorn.conf`` (Método Upstart) esto permitirá controlar el servidor ``gunicorn``de manera remota usando Fabric, [Leer más sobre Linux Upstart](https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it)
 
-## Despliegue y provisionamiento de la máquina virtual **Vagrant** + **Ansible**
+### Despliegue y provisionamiento de la máquina virtual **Vagrant** + **Ansible**
 
 Teniendo en cuenta que la reproducción debe ser escalable y reproducible se ha creado un fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml) que contiene todas las variables necesarias para el despliegue incluyendo las variables de entorno de la aplicación, este fichero se usará por Vagrant, Ansible y Fabric.
 
@@ -508,7 +508,7 @@ Para el despliegue de la máquina se ha usado ``Vagrant`` y el plugin ``vagrant-
 
 Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. (consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml)), además se ha creado un fichero [ansible_hosts](https://github.com/Mustapha90/IV16-17/blob/master/ansible_hosts) que contiene la información necesaria para localizar la máquina virtual, en este caso se ha usado la misma configuración usada en ``Vagrantfile``.
 
-## Despliegue remoto de la aplicación - Fabric
+### Despliegue remoto de la aplicación - Fabric
 
 El despliegue de la aplicación se ha realizado con Fabric, para ello se ha creado un fichero [fabfile.py](https://github.com/Mustapha90/IV16-17/blob/master/fabfile.py) que contiene las instrucciones necesarias para desplegar la aplicación.
 
@@ -525,9 +525,11 @@ La aplicación se encuentra desplegada en el siguiente enlace:
 [Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**](https://github.com/Mustapha90/IV16-17/blob/documentacion/DespliegeAzure.md)
 
 
-## Despliegue automático en Azure desde 0
+### Despliegue automático en Azure desde 0
 
-Para desplegar la aplicación con su soporte virtual desde 0 en Azure, se necesita un fichero ``azure_key.pem`` y el id de la subscipción de Azure, se puede seguir este tutorial para obtenerlos:
+Para desplegar la aplicación con su soporte virtual desde 0 en Azure, hay que instalar Azure-CLI y configurar las credenciales previamente.
+
+He creado este tutorial con los pasos que hay que seguir:
 
 [Instalar Azure-CLI y configurar las credenciales](https://github.com/Mustapha90/IV16-17/blob/documentacion/AzureConfig.md)
  
@@ -543,7 +545,7 @@ Cambiamos de directorio
 
 ``$ cd IV16-17/``
 
-Editamos esta parte del fichero ``vars.yml``, lo demás de deja intacto:
+Editamos esta parte del fichero ``vars.yml``:
 
 ```yml
 #************Credenciales azure: hay que editar estas variables*************************
@@ -575,14 +577,16 @@ DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
 
 ``` 
 
+Las demás variables que hay en el fichero se dejan intactas. 
+
 Guardamos el fichero ``vars.yml``, y ejecutamos el script [azure.sh](https://github.com/Mustapha90/IV16-17/blob/master/azure.sh):
  
 ``$ ./azure.sh``
 
-Cuando termine el script podemos visualizar la aplicación en el navegador usando el siguiente enlace:
+Para visualizar la aplicación en el navegador usamos el siguiente enlace:
 
-(vm_name).cloudapp.net
+vm_name.cloudapp.net
 
-Donde ``vm_name`` es el nombre de la máquina virtual especificado en el fichero ``vars.yml``
+Donde ``vm_name`` es el nombre de la máquina virtual que hemos especificado en el fichero ``vars.yml``
 
 
