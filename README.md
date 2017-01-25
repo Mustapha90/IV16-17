@@ -508,7 +508,7 @@ Teniendo en cuenta que la reproducción debe ser escalable y reproducible se ha 
 
 Para el despliegue de la máquina se ha usado ``Vagrant`` y el plugin ``vagrant-azure``, para ello se ha creado un fichero [Vagrantfile](https://github.com/Mustapha90/IV16-17/blob/master/Vagrantfile), que contiene la configuración con la que se desplegará la máquina.
 
-Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. (consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml)), además se ha creado un fichero [ansible_hosts](https://github.com/Mustapha90/IV16-17/blob/master/ansible_hosts) que contiene la información necesaria para localizar la máquina virtual, en este caso se ha usado la misma configuración usada en ``Vagrantfile``.
+Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. (consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml))
 
 ### Despliegue remoto de la aplicación - Fabric
 
