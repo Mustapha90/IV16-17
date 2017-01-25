@@ -13,7 +13,7 @@ sudo vagrant plugin install vagrant-azure
 sudo apt-get install -y python-pip
 
 #Actualizar pip
-pip install -U pip
+sudo pip install -U pip
 
 #Instalar ansible
 sudo pip install paramiko PyYAML jinja2 httplib2 ansible
@@ -21,10 +21,13 @@ sudo pip install paramiko PyYAML jinja2 httplib2 ansible
 #Instalar fabric
 sudo apt-get install -y fabric
 
+#Descargar azure box
+vagrant box add azure https://github.com/msopentech/vagrant-azure/raw/master/dummy.box
+
 # Creación y provisionamiento de la máquina virtual con vagrant y ansible
-sudo vagrant up --provider=azure
+vagrant up --provider=azure
 
 
 #Despliegue y ejecución de la aplicación con fabric
-sudo fab deploy
+fab deploy
 
