@@ -226,15 +226,6 @@ end
 
 ```
 
-Ahora nos falta un fichero más, ``ansible_hosts`` que contendrá la información necesaria para que ``ansible`` pueda localizar la MV
-
-```
-[localhost]
-192.168.33.101
-```
-
-La IP es la misma que hemos especificado en el fichero Vagrantfile.
-
 Ya tenemos todos los ficheros necesarios para desplegar la máquina virtual.
 
 Descargamos la "Box" de azure:
