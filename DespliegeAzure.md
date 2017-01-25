@@ -140,7 +140,7 @@ server {
 ```
 Creamos un fichero ``provision.yml`` para ``ansible``
 
-```
+```yml
 ---
 - hosts: localhost
   vars_files:
@@ -162,6 +162,12 @@ Creamos un fichero ``provision.yml`` para ``ansible``
 ```
 
 Ansible se encargará de instalar los paquetes del sistema, y copiar los ficheros de configuración ``gunicorn.j2`` y ``nginx.j2`` a la máquina remota, usando la directiva ``template``, las variables que hemos visto en los ficheros de configuración se reemplazarán por su contenido antes de copiar los ficheros.
+
+Elegimos una imagen de las disponibles en azure:
+
+``$ azure vm image list``
+
+He elegido la imagen ``b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_5-LTS-amd64-server-20160809.1-en-us-30GB``
 
 Creamos un fichero ``Vagrantfile`` con la configuración necesaria para desplegar la máquina virtual:
 
