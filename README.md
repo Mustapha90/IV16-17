@@ -520,7 +520,7 @@ Que desplegará la aplicación en la máquina remota, cuyos datos (vm_user,vm_na
 
 La aplicación se encuentra desplegada en el siguiente enlace:
 
-[proyectoiv1617.cloudapp.net](proyectoiv1617.cloudapp.net)
+[http://proyectoiv1617.cloudapp.net](http://proyectoiv1617.cloudapp.net)
 
 [Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**](https://github.com/Mustapha90/IV16-17/blob/documentacion/DespliegeAzure.md)
 
