@@ -498,7 +498,9 @@ El despliegue se ha realizado en **Azure**.
 El proceso se ha dividido en dos pasos, despliegue y provisionamiento de la máquina virtual con ``Vagrant`` y ``Ansible``, y despliegue remoto de la aplicación usando ``Fabric``, además se ha creado un script que automatiza el proceso entero con el objetivo de poder desplegar aplicación con su soporte virtual partiendo desde 0 es decir disponiendo solamente de una cuenta **Azure**.
 
 La aplicación se ha desplegado con ``nginx`` y ``gunicorn`` para lograr un buen rendimiento, ``nginx``
-se encargará de servir el contenido estático de la aplicación y funcionar como proxy inverso de ``gunicorn``, los ficheros de configuracón se pueden consultar en [nginx.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/nginx.j2) y [gunicorn.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/gunicorn.j2), para ``gunicorn`` el fichero de configuración se copia en ``/etc/init/gunicorn.conf`` (Método Upstart) esto permitirá controlar el servidor ``gunicorn``de manera remota usando Fabric, [Leer más sobre Linux Upstart](https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it)
+se encargará de servir el contenido estático de la aplicación y funcionar como proxy inverso, los ficheros de configuración se pueden consultar en [nginx.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/nginx.j2) y [gunicorn.j2](https://github.com/Mustapha90/IV16-17/blob/master/server_config/gunicorn.j2), para ``gunicorn`` el fichero de configuración se copia en ``/etc/init/gunicorn.conf`` (Método Upstart) esto permitirá controlar el servidor ``gunicorn``de manera remota usando Fabric.
+
+[Leer más sobre Linux Upstart](https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it)
 
 ### Despliegue y provisionamiento de la máquina virtual **Vagrant** + **Ansible**
 
@@ -516,14 +518,13 @@ Para desplegar la aplicación se usa el comando:
 
 ``$ fab deploy``
 
-Que desplegará la aplicación en la máquina remota, cuyos datos (vm_user,vm_name,vm_pass etc) se encuentran en el fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml). Este comando sirve también para actualizar una aplicación ya desplegada, ya que no solamente clona el repositorio sino comprueba si ya existe y realiza un ``git fetch`` para obtener los últimos cambios y vuelve a desplegar la aplicación, por último reinicia los servidores ``gunicorn`` y ``nginx``.
+Que desplegará la aplicación en la máquina remota previamente creada, cuyos datos (vm_user,vm_name,vm_pass etc) se encuentran en el fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml). Este comando sirve también para actualizar la aplicación si ya está desplegada, ya que no solamente clona el repositorio sino comprueba si ya existe y realiza un ``git fetch`` para obtener los últimos cambios y vuelve a desplegar la aplicación, por último reinicia los servidores ``gunicorn`` y ``nginx``.
 
 La aplicación se encuentra desplegada en el siguiente enlace:
 
 [http://proyectoiv1617.cloudapp.net](http://proyectoiv1617.cloudapp.net)
 
 [Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**](https://github.com/Mustapha90/IV16-17/blob/documentacion/DespliegeAzure.md)
-
 
 ### Despliegue automático en Azure desde 0
 
