@@ -522,7 +522,7 @@ La aplicación se encuentra desplegada en el siguiente enlace:
 
 [proyectoiv1617.cloudapp.net](proyectoiv1617.cloudapp.net)
 
-[Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**]()
+[Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**](https://github.com/Mustapha90/IV16-17/blob/documentacion/DespliegeAzure.md)
 
 
 ## Despliegue automático en Azure desde 0
