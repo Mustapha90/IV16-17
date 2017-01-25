@@ -47,7 +47,7 @@ $ openssl x509 -inform pem -in azure_key.pem -outform der -out azure_key.cer
 
 Subimos el fichero ``azure_key.cer`` a nuestra [cuenta de Azure](https://manage.windowsazure.com/), en el apartado configuración --> CERTIFICADOS DE ADMINISTRACIÓN.
 
-Por último, obtenemos el identificador de nuestra subscripción en Azure:
+Por último, obtenemos el identificador de nuestra subscripción en Azure: 
 
 ``$ azure account list``
 
