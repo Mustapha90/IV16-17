@@ -12,7 +12,7 @@ Este proyecto consiste en crear la infraestructura para el alojamiento, funciona
 3. [Integración continua](#integración-continua)
 4. [Despliegue en PaaS - Heroku](#despliegue-en-paas---heroku)
 5. [Entorno de pruebas - Docker](#entorno-de-pruebas---docker)
-6. [Despliegue en IaaS - Azure](#Despliegue-en-IaaS---Azure)
+6. [Despliegue en IaaS - Azure](#despliegue-en-iaas---azure)
 
 
 ##Descripción
@@ -502,11 +502,11 @@ se encargará de servir el contenido estático de la aplicación y funcionar com
 
 ## Despliegue y provisionamiento de la máquina virtual **Vagrant** + **Ansible**
 
-Teniendo en cuenta que la reproducción debe ser escalable y reproducible se ha creado un fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml) que contiene todas las variables necesarias para el despliegue incluyendo las variables de entorno de la aplicación este fichero se usará por Vagrant, Ansible y Fabric.
+Teniendo en cuenta que la reproducción debe ser escalable y reproducible se ha creado un fichero [vars.yml](https://github.com/Mustapha90/IV16-17/blob/master/vars.yml) que contiene todas las variables necesarias para el despliegue incluyendo las variables de entorno de la aplicación, este fichero se usará por Vagrant, Ansible y Fabric.
 
 Para el despliegue de la máquina se ha usado ``Vagrant`` y el plugin ``vagrant-azure``, para ello se ha creado un fichero [Vagrantfile](https://github.com/Mustapha90/IV16-17/blob/master/Vagrantfile), que contiene la configuración con la que se desplegará la máquina.
 
-Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml), además se ha creado un fichero [ansible_hosts](https://github.com/Mustapha90/IV16-17/blob/master/ansible_hosts) que la información necesaria para localizar la máquina virtual, en este caso se ha usado la misma configuración usada en ``Vagrantfile``.
+Para el provisionamiento de la máquina se ha usado ``Ansible``, que se encargará de instalar los paquetes del sistema y copiar los ficheros de configuración de ``nginx`` y ``gunicorn`` a la máquina remota. (consulte el fichero [provision.yml](https://github.com/Mustapha90/IV16-17/blob/master/provision.yml)), además se ha creado un fichero [ansible_hosts](https://github.com/Mustapha90/IV16-17/blob/master/ansible_hosts) que contiene la información necesaria para localizar la máquina virtual, en este caso se ha usado la misma configuración usada en ``Vagrantfile``.
 
 [Consulte más información sobre este proceso]()
 
@@ -524,7 +524,7 @@ La aplicación se encuentra desplegada en el siguiente enlace:
 
 [proyectoiv1617.cloudapp.net](proyectoiv1617.cloudapp.net)
 
-[Consulte la documentación detallada del proceso]()
+[Consulte la documentación detallada del proceso **Vagrant** + **Ansible** + **Fabric**]()
 
 
 ## Despliegue automático en Azure desde 0
@@ -577,14 +577,14 @@ DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
 
 ``` 
 
-Guardamos el fichero ``vars.yml``, y ejecutamos el script azure.sh:
+Guardamos el fichero ``vars.yml``, y ejecutamos el script [azure.sh](https://github.com/Mustapha90/IV16-17/blob/master/azure.sh):
  
 ``$ ./azure.sh``
 
-Cuando termine el script podemos visualizar la aplicacion en el navegador usando el siguiente enlace:
+Cuando termine el script podemos visualizar la aplicación en el navegador usando el siguiente enlace:
 
-<vm_name>.cloudapp.net
+(vm_name).cloudapp.net
 
-donde ``vm_name`` es el nombre de la máquina virtual especificado en el fichero ``vars.yml``
+Donde ``vm_name`` es el nombre de la máquina virtual especificado en el fichero ``vars.yml``
 
 
