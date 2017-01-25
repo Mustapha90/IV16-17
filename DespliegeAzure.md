@@ -14,7 +14,7 @@ Instalamos ``Vagrant`` y el plugin ``vagrant-azure`` necesario para trabajar con
 ```
 $ apt-get install vagrant
 $ vagrant plugin install vagrant-azure
-``
+```
 
 Instalamos Fabric:
 
