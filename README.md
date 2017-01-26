@@ -346,7 +346,7 @@ Ya tenemos la configuración necesaria para desplegar la aplicación en heroku.
 
 -Creamos una variable de entorno que indica que el entorno es Heroku
 
-``$ heroku config:set ON_HEROKU=1``
+``$ heroku config:set EN_PROD=1``
 
 -Creamos la variable de entonro SECRET_KEY en Heroku
 
@@ -371,6 +371,10 @@ Ya tenemos la configuración necesaria para desplegar la aplicación en heroku.
 La aplicación se encuentra desplegada en el siguiente enlace:
 
 [![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat)](https://iv1617.herokuapp.com)
+
+Para no tener que desplegar la aplicación manualmente cuando se realizan cambios se ha configurado el despliegue automático desde GitHub.
+
+[Ver más informaicón](https://github.com/Mustapha90/IV16-17/blob/documentacion/heroku.md)
 
 ### Actualización de la configuración de Travis
 
@@ -427,7 +431,7 @@ run:
 deploy:
 	heroku apps:create --region eu
 	heroku addons:create heroku-postgresql:hobby-dev
-	heroku config:set ON_HEROKU=1
+	heroku config:set EN_PROD=1
 	heroku config:set SECRET_KEY=`openssl rand -base64 32`
 	git push heroku master
 	heroku run python manage.py migrate --noinput
